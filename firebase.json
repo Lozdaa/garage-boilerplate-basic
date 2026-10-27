@@ -6,11 +6,10 @@
   "functions": {
     "source": "backend",
     "codebase": "default",
-    "ignore": [
-      "node_modules",
-      ".git",
-      "tests",
-      "*.test.ts"
-    ]
+    "runtime": "nodejs22",
+    "ignore": ["node_modules", ".git", "tests", "*.test.ts"]
+  },
+  "emulators": {
+    "functions": { "host": "0.0.0.0", "port": 5001 }
   }
 }

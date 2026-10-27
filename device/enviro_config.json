@@ -1,0 +1,41 @@
+{
+    "temperature":
+    {
+        "unit": "celsius",
+        "min": 15,
+        "max": 24
+    },
+    "humidity":
+    {
+        "unit": "percent",
+        "min": 30,
+        "max": 65
+    },
+    "pressure":
+    {
+        "unit": "hPa",
+        "min": 980,
+        "max": 1050
+    },
+    "orientation": 
+    {
+        "pitch":
+        {
+            "unit": "degrees",
+            "min": -30,
+            "max": 30
+        },
+        "roll":
+        {
+            "unit": "degrees",
+            "min": -30,
+            "max": 30
+        },
+        "yaw":
+        {
+            "unit": "degrees",
+            "min": -15,
+            "max": 15
+        }
+    }
+}

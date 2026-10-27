@@ -85,9 +85,9 @@ frontendLines.push(`FIREBASE_SERVICE_ACCOUNT_KEY_BASE64=${get('FIREBASE_SERVICE_
 const backendLines = [
   header('read by the Firebase Functions CLI'),
   `NEXT_PUBLIC_FIREBASE_PROJECT_ID=${get('NEXT_PUBLIC_FIREBASE_PROJECT_ID')}`,
-  `FIREBASE_SERVICE_ACCOUNT_KEY_BASE64=${get('FIREBASE_SERVICE_ACCOUNT_KEY_BASE64')}`,
+  `SERVICE_ACCOUNT_KEY_BASE64=${get('FIREBASE_SERVICE_ACCOUNT_KEY_BASE64')}`,
   `CORS_ORIGIN=${get('CORS_ORIGIN')}`,
-  `PORT=${get('PORT')}`,
+  //`PORT=${get('PORT')}`,
 ]
 
 fs.writeFileSync(path.join(root, 'frontend', '.env.local'), frontendLines.join('\n') + '\n')

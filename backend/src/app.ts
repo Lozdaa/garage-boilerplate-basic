@@ -5,6 +5,7 @@ import rateLimit from 'express-rate-limit'
 import { createAuthMiddleware, verifyFirebaseToken, type VerifyToken } from './middleware/auth'
 import { errorHandler } from './middleware/errorHandler'
 import { healthRouter } from './routes/health'
+import { devicesRouter } from './routes/devices'
 import { apiRouter } from './routes'
 
 interface AppOptions {
@@ -51,6 +52,8 @@ export function createApp({ verifyToken = verifyFirebaseToken }: AppOptions = {}
 
   // Public routes (no auth)
   app.use('/api/health', healthRouter)
+
+  app.use('/api/devices', devicesRouter) 
 
   // Protected routes — require a valid Firebase ID token
   app.use('/api', authMiddleware, apiRouter)

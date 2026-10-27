@@ -11,7 +11,7 @@ const app = createApp()
  */
 export const api = onRequest(
   {
-    region: 'australia-southeast1',
+    region: 'australia-southeast2',
     maxInstances: 10,
     memory: '256MiB',
     timeoutSeconds: 60,

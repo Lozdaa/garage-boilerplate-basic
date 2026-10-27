@@ -5,9 +5,9 @@ import { getFirestore } from 'firebase-admin/firestore'
 function getAdminApp(): App {
   if (getApps().length > 0) return getApps()[0]!
 
-  const encodedKey = process.env.FIREBASE_SERVICE_ACCOUNT_KEY_BASE64
+  const encodedKey = process.env.SERVICE_ACCOUNT_KEY_BASE64
   if (!encodedKey) {
-    throw new Error('FIREBASE_SERVICE_ACCOUNT_KEY_BASE64 is not set')
+    throw new Error('SERVICE_ACCOUNT_KEY_BASE64 is not set')
   }
 
   return initializeApp({

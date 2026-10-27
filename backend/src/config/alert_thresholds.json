@@ -1,0 +1,63 @@
+{
+  "temperature": 
+  {
+    "unit": "celsius",
+    "warning": 
+    {
+        "min": 15,
+        "max": 24
+    },
+    "danger":  
+    {
+        "min": 5,
+        "max": 38
+    }
+  },
+  "humidity": 
+  {
+    "unit": "percent",
+    "warning": 
+    {
+        "min": 30,
+        "max": 65
+    },
+    "danger":  
+    {
+        "min": 10,
+        "max": 90
+    }
+  },
+  "pressure": 
+  {
+    "unit": "hPa",
+    "warning": 
+    {
+        "min": 980,
+        "max": 1050
+    },
+    "danger":  
+    {
+        "min": 950,
+        "max": 1080
+    }
+  },
+  "orientation":
+  {
+    "pitch":
+    {
+        "unit": "degrees",
+        "min": -30,
+        "max": 30
+    },
+    "roll":
+    {
+        "unit": "degrees",
+        "min": -30,
+        "max": 30
+    }
+  },
+  "turnedOver":  
+    {
+        "accelerationZBelow": -0.7
+    }
+}

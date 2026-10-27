@@ -254,10 +254,10 @@ while True:
             (f"P:{round(p_raw)}/R:{round(r_raw)}/Y:{round(y_raw)}", orientation_colour)
         ]
         
-        accel = sense.get_accelerometer_raw()
+        acceleration = sense.get_accelerometer_raw()
 
         reading = {
-            "accel": {"x": round(accel["x"], 3), "y": round(accel["y"], 3), "z": round(accel["z"], 3)},
+            "acceleration": {"x": round(acceleration["x"], 3), "y": round(acceleration["y"], 3), "z": round(acceleration["z"], 3)},
             "temperature": round(temperature, 1),
             "humidity": round(humidity, 1),
             "orientation": {"pitch": round(p, 1), "roll": round(r, 1), "yaw": round(yaw_sector_check, 1)},

@@ -54,6 +54,8 @@ export interface Pendant {
   currentAlertID?: string | null
   sosActive?: boolean
   sosAt?: Timestamp
+  sosResolvedAt?: Timestamp
+  sosResolvedBy?: string
   _schemaVersion: 1
 }
 

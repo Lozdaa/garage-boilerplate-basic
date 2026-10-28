@@ -1,6 +1,6 @@
 import { collection, doc, type CollectionReference, type DocumentData } from 'firebase/firestore'
 import { getClientDb } from './client'
-import type { UserProfile } from '@/types/firestore'
+import type { UserProfile, Pendant, PendantAlert } from '@/types/firestore'
 
 /**
  * Creates a typed Firestore collection reference.
@@ -22,4 +22,16 @@ export function getUsersCollection() {
 
 export function userDoc(uid: string) {
   return doc(getUsersCollection(), uid)
+}
+
+export function getPendantsCollection() {
+  return typedCollection<Pendant>('pendants')
+}
+
+export function pendantDoc(id: string) {
+  return doc(getPendantsCollection(), id)
+}
+
+export function getAlertsCollection() {
+  return typedCollection<PendantAlert>('alerts')
 }

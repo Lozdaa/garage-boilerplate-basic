@@ -3,6 +3,7 @@
 import { useNow, usePendant } from "@/features/pendants/hooks/usePendant"
 import type { Pendant } from "@/types/firestore"
 import { PendantTile } from "./PendantTiles"
+import { AlertList } from "./AlertList"
 
 const OFFLINE_AFTER_MS = 90_000
 
@@ -28,9 +29,6 @@ function secondsAgo(ms: number | undefined, now: number): string {
     return sec < 60 ? `${sec}s ago` : `${Math.round(sec/60)} min ago`
 }
 
-/* Temp test: dump the raw document so changes can be seen*/
-//<pre className="text-xs">{JSON.stringify(pendant, null, 2)}</pre>
-
 export function PendantDetails({pendantID}: {pendantID: string}) {
     const {pendant, loading, error} = usePendant(pendantID)
     const now = useNow()
@@ -42,8 +40,7 @@ export function PendantDetails({pendantID}: {pendantID: string}) {
     const [status, colour] = getStatus(pendant, now)
 
     const reading = pendant.lastReading ?? {}
-    //°
-    //{label: "", value: reading.temperature?.toFixed(1), unit: ""},
+
     const tiles= [
         {label: "Temperature", value: reading.temperature?.toFixed(1), unit: "°C"},
         {label: "Humidity", value: reading.humidity?.toFixed(0), unit: "%"},
@@ -68,6 +65,8 @@ export function PendantDetails({pendantID}: {pendantID: string}) {
                     <PendantTile key={t.label} label={t.label} value={t.value} unit={t.unit} />
                 ))}
             </div>
+
+            <AlertList pendantID={pendantID} />
 
         </div>
     )

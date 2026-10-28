@@ -1,7 +1,6 @@
 'use client'
 
 import { useNow, usePendant } from "@/features/pendants/hooks/usePendant"
-import type { Pendant } from "@/types/firestore"
 import { PendantTile } from "./PendantTiles"
 import { AlertList } from "./AlertList"
 import { useTransition } from "react"

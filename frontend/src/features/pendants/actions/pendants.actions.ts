@@ -15,7 +15,7 @@ export async function resolveSOS(pendantID:string): Promise<ActionResult> {
     if (!parsed.success) {
         return {
             success: false,
-            error: parsed.error.errors[0]?.message ?? 'Invalid pendant id'
+            error: parsed.error.issues[0]?.message ?? 'Invalid pendant id'
         }
     }
 

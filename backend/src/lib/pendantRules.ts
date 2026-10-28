@@ -1,4 +1,3 @@
-import { read } from 'fs'
 import thresholds from '../config/alert_thresholds.json'
 
 // Reading model taken from device output, all the sensors

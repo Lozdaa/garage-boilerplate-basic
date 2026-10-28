@@ -1,7 +1,3 @@
-'''
-This class is used as to store the faces that are to be used within moodAnimatorFaces.py
-So that aforementioned file can be easier to read and edit
-'''
 class SensorAnimatorFaces:
     green = (0, 255, 0)
     yellow = (255, 255, 0)
@@ -132,12 +128,3 @@ class SensorAnimatorFaces:
         ]
         
         return [manualHelpFrame1, manualHelpFrame2, manualHelpFrame3, manualHelpFrame4]
-
-    # Used to dim pixels
-    def pixel_dimmer(self, pixels, factor=0.5):
-        for i in range(len(pixels)):
-                r = int(pixels[i][0] * factor)
-                g = int(pixels[i][1] * factor)
-                b = int(pixels[i][2] * factor)
-                pixels[i] = (r, g, b)
-        return pixels

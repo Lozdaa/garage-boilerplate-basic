@@ -56,6 +56,26 @@ service cloud.firestore {
       allow delete: if false; // soft-delete only — set deletedAt field instead
     }
 
+    // This is for pi/pendants, warning | danger alerts and the readings:
+    // This is written ONLY by server code (Admin SDK bypasses rules).
+    //A signed-in user needs to be able to read all the data from pendants on the live page, 
+    //this means the browser should never write the data.
+
+    match /pendants/{pendantID} {
+      allow read: if isAuthenticated();
+      allow write: if false;
+    }
+
+    match /alerts/{alertID} {
+      allow read: if isAuthenticated();
+      allow write: if false;
+    }
+
+    match /readings/{readingID} {
+      allow read: if isAuthenticated();
+      allow write: if false;
+    }
+
     // Add new collection rules above this comment using the /firebase-collection skill.
 
     // ── Default deny ───────────────────────────────────────────────────────

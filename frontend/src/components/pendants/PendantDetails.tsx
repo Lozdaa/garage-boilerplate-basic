@@ -7,31 +7,7 @@ import { AlertList } from "./AlertList"
 import { useTransition } from "react"
 import { toast } from "sonner"
 import { resolveSOS } from "@/features/pendants/actions/pendants.actions"
-
-const OFFLINE_AFTER_MS = 90_000
-
-type Status = 'SOS' | 'DANGER' | 'OFFLINE' | 'WARNING' | 'OK'
-
-
-//Ordering pendant status, worst is manual help
-function getStatus(pendant: Pendant, now: number): [Status, string] {
-    if (pendant.sosActive) return ['SOS', 'bg-orange-500']
-    if (pendant.dangerActive) return ['DANGER', 'bg-red-500']
-
-    const lastPing = pendant.lastPing?.toMillis()
-    if (lastPing === undefined || now - lastPing > OFFLINE_AFTER_MS) return ['OFFLINE', "bg-zinc-200"]
-
-    if (pendant.warnings && pendant.warnings.length > 0) return ['WARNING', "bg-yellow-400"]
-    
-    return ['OK', "bg-green-500"]
-}
-
-function secondsAgo(ms: number | undefined, now: number): string {
-    if (ms === undefined) return 'never'
-    const sec = Math.max(0, Math.round((now - ms) / 1000))
-
-    return sec < 60 ? `${sec}s ago` : `${Math.round(sec/60)} min ago`
-}
+import { getStatus, secondsAgo } from './pendantStatus'
 
 export function PendantDetails({pendantID}: {pendantID: string}) {
     const {pendant, loading, error} = usePendant(pendantID)

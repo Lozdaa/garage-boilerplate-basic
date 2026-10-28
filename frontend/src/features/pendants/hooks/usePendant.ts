@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { onSnapshot, query, where } from "firebase/firestore";
-import { pendantDoc, getAlertsCollection } from "@/lib/firebase/firestore";
+import { pendantDoc, getAlertsCollection, getPendantsCollection } from "@/lib/firebase/firestore";
 import type { Pendant, PendantAlert } from "@/types/firestore";
 
 export function usePendant(pendantID: string) {
@@ -33,6 +33,29 @@ export function usePendant(pendantID: string) {
     }, [pendantID]) // Only re-subscribes if the pendant id changes
 
     return {pendant, loading, error}
+}
+
+export function usePendants() {
+    const [pendants, setPendants] = useState<Pendant[]>([])
+    const [loading, setLoading] = useState(true)
+    const [error, setError] = useState<Error | null>(null)
+
+    useEffect(() => {
+        const unsubscribe = onSnapshot(
+            query(getPendantsCollection()),
+            (snap) => {
+                setPendants(snap.docs.map((d) => ({...d.data(), id: d.id})))
+                setLoading(false)
+            },
+            (err) => {
+                setError(err)
+                setLoading(false)
+            },
+        )
+        return unsubscribe
+    }, []) //this means it will grab on page open only
+
+    return {pendants, loading, error}
 }
 
 export function useNow(intervalMs = 5000) {

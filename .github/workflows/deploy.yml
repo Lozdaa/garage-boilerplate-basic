@@ -10,9 +10,6 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  # Frontend deploys are handled by Vercel's own GitHub integration — connect
-  # the repo in the Vercel dashboard and it deploys automatically on push.
-  # This job only handles what Firebase itself owns: Firestore security rules.
   deploy-firestore-rules:
     name: Deploy Firestore Rules
     runs-on: ubuntu-latest
@@ -32,14 +29,8 @@ jobs:
             --project ${{ secrets.FIREBASE_PROJECT_ID }} \
             --non-interactive
 
-  # Optional — only needed if this project actually uses backend/ (the Express
-  # API). Cloud Functions v2 requires the Blaze (pay-as-you-go) plan, so this
-  # never runs automatically — trigger it manually via "Run workflow" in the
-  # Actions tab once the Firebase project is on Blaze and you're ready to ship
-  # the backend.
   deploy-functions:
-    name: Deploy Backend (optional, manual)
-    if: github.event_name == 'workflow_dispatch'
+    name: Deploy Backend (Cloud Function)
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -59,6 +50,11 @@ jobs:
 
       - name: Build backend
         run: pnpm --filter backend build
+
+      # The function's runtime settings. Only the device key: in the cloud the
+      # function logs in as the project itself (see backend/src/lib/firebase.ts)
+      - name: Write backend runtime config
+        run: echo "DEVICE_API_KEY=${{ secrets.DEVICE_API_KEY }}" > backend/.env
 
       - name: Authenticate to Google Cloud
         run: |

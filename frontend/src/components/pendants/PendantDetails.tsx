@@ -7,7 +7,7 @@ import { AlertList } from "./AlertList"
 import { useTransition } from "react"
 import { toast } from "sonner"
 import { resolveSOS } from "@/features/pendants/actions/pendants.actions"
-import { getStatus, secondsAgo } from './pendantStatus'
+import { getStatus, secondsAgo, tileBorder, REASON_LABELS } from './pendantStatus'
 
 export function PendantDetails({pendantID}: {pendantID: string}) {
     const {pendant, loading, error} = usePendant(pendantID)
@@ -22,11 +22,15 @@ export function PendantDetails({pendantID}: {pendantID: string}) {
 
     const reading = pendant.lastReading ?? {}
 
+    // Only show danger reasons while danger is active
+    const dangers = pendant.dangerActive ? (pendant.dangerReasons ?? []) : []
+    const warnings = pendant.warnings ?? []
+
     const tiles= [
-        {label: "Temperature", value: reading.temperature?.toFixed(1), unit: "°C"},
-        {label: "Humidity", value: reading.humidity?.toFixed(0), unit: "%"},
-        {label: "Pressure", value: reading.pressure?.toFixed(0), unit: "hPa"},
-        {label: "Acceleration", value: reading.acceleration ? `X: ${reading.acceleration?.x.toFixed(1)}\nY: ${reading.acceleration?.y.toFixed(1)}\nZ: ${reading.acceleration?.z.toFixed(1)}` : undefined, unit: ""},
+        {label: "Temperature", reason: "TEMPERATURE", value: reading.temperature?.toFixed(1), unit: "°C"},
+        {label: "Humidity", reason: "HUMIDITY", value: reading.humidity?.toFixed(0), unit: "%"},
+        {label: "Pressure", reason: "PRESSURE", value: reading.pressure?.toFixed(0), unit: "hPa"},
+        {label: "Acceleration", reason: "TURNED_OVER", value: reading.acceleration ? `X: ${reading.acceleration?.x.toFixed(1)}\nY: ${reading.acceleration?.y.toFixed(1)}\nZ: ${reading.acceleration?.z.toFixed(1)}` : undefined, unit: ""},
     ]
 
     function onResolve() {
@@ -62,9 +66,15 @@ export function PendantDetails({pendantID}: {pendantID: string}) {
                 </div>
             )}
 
+            {dangers.length > 0 && (
+                <div className="rounded-lg bg-red-500 p-4 font-semibold text-white">
+                    Danger: {dangers.map((d) => REASON_LABELS[d] ?? d).join(', ')}
+                </div>
+            )}
+
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
                 {tiles.map((t) =>(
-                    <PendantTile key={t.label} label={t.label} value={t.value} unit={t.unit} />
+                    <PendantTile key={t.label} label={t.label} value={t.value} unit={t.unit} border={tileBorder(t.reason, dangers, warnings)} />
                 ))}
             </div>
 

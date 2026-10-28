@@ -23,3 +23,18 @@ export function secondsAgo(ms: number | undefined, now: number): string {
 
     return sec < 60 ? `${sec}s ago` : `${Math.round(sec/60)} min ago`
 }
+
+export const REASON_LABELS: Record<string, string> = {
+    TEMPERATURE: 'Temperature',
+    HUMIDITY: 'Humidity',
+    PRESSURE: 'Pressure',
+    TURNED_OVER: 'Turned over',
+    TILTED: 'Tilted',
+}
+
+// Border colour
+export function tileBorder(reason: string, dangers: string[], warnings: string[]): string {
+  if (dangers.includes(reason)) return 'border-red-500 border-4'
+  if (warnings.includes(reason)) return 'border-yellow-400 border-4'
+  return ''
+}

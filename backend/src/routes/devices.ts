@@ -1,15 +1,20 @@
 import { Router, type Router as ExpressRouter } from 'express'
 import { adminDb } from '../lib/firebase'
 import { evaluateReadings } from '../lib/pendantRules'
+import { deviceAuth } from '../middleware/deviceAuth'
+import { HttpError } from '../lib/errors'
 
 const router: ExpressRouter = Router()
 
 // This is route
 // POST /api/devices/:deviceId/readings
 
-router.post('/:deviceID/readings', async (req, res, next) => {
+router.post('/:deviceID/readings', deviceAuth, async (req, res, next) => {
     try {
         const pendantID = req.params.deviceID
+        if (typeof pendantID !== 'string' || pendantID === '') {
+            return next(HttpError.badRequest('Missing device id'))
+        }
         const pendantRef = adminDb.collection('pendants').doc(pendantID) // the route so for example: pendants/pi-01
         const now = new Date()
 
